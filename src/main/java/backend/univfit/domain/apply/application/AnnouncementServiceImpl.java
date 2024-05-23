@@ -111,7 +111,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipImage(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
                 remainingDay, applyPossible, supportAmount, ae.getApplicationPeriod(),
                 ae.getHashTag(), applyCondition, ae.getDetailContents(), likesCount,
-                isLikedByMember, isStoredByMember);
+                isLikedByMember, isStoredByMember, ae.getFoundationLink());
     }
 
     @Override
