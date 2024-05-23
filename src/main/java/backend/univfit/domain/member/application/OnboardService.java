@@ -162,7 +162,7 @@ public class OnboardService {
             memberPrivateInfo.setTotalGradeOfThree(obr.getTotalGrade());
         }
 
-        if(obr.getLastGrade() >= 4.5){
+        if(obr.getLastFullGrade() >= 4.5){
             memberPrivateInfo.setLastGradeOfFive(obr.getLastGrade());
         }
         else{
