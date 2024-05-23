@@ -155,14 +155,14 @@ public class OnboardService {
         memberPrivateInfo.setDeptName(obr.getDeptName());
         memberPrivateInfo.setIsPresent(obr.getIsPresent());
         memberPrivateInfo.setSemester(obr.getSemester());
-        if(obr.getTotalFullGrade() == 4.5){
+        if(obr.getTotalFullGrade() >= 4.5){
             memberPrivateInfo.setTotalGradeOfFive(obr.getTotalGrade());
         }
         else{
             memberPrivateInfo.setTotalGradeOfThree(obr.getTotalGrade());
         }
 
-        if(obr.getLastGrade() == 4.5){
+        if(obr.getLastGrade() >= 4.5){
             memberPrivateInfo.setLastGradeOfFive(obr.getLastGrade());
         }
         else{
