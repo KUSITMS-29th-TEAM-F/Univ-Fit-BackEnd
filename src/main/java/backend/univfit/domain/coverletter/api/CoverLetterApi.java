@@ -1,14 +1,12 @@
 package backend.univfit.domain.coverletter.api;
 
-import backend.univfit.domain.coverletter.api.dto.CoverLetterQuestionsResponse;
-import backend.univfit.domain.coverletter.api.dto.PathCoverLetterRequest;
-import backend.univfit.domain.coverletter.api.dto.SaveCoverLetterRequest;
-import backend.univfit.domain.coverletter.api.dto.SaveCoverLetterResponse;
+import backend.univfit.domain.coverletter.api.dto.*;
 import backend.univfit.domain.coverletter.service.CoverLetterService;
 import backend.univfit.global.ApiResponse;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
 import backend.univfit.global.argumentResolver.customAnnotation.MemberInfo;
 import backend.univfit.global.dto.response.GeneralResponse;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +34,13 @@ public class CoverLetterApi {
                                                          @MemberInfo MemberInfoObject mio){
         return ApiResponse.onSuccess(coverLetterService.patchCoverLetter(clr, mio));
     }
+
+    //내가 지원한 공고 불러오기(자소서 용)
+    @GetMapping("/apply-list")
+    public ApiResponse<CoverLetterApplyList> getApplyList(@MemberInfo MemberInfoObject mio){
+        return ApiResponse.onSuccess(coverLetterService.getApplyList(mio));
+    }
+
 
 
 

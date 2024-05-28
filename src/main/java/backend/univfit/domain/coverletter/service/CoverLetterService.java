@@ -2,6 +2,7 @@ package backend.univfit.domain.coverletter.service;
 
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.entity.ApplyEntity;
+import backend.univfit.domain.apply.entity.enums.ApplyStatus;
 import backend.univfit.domain.apply.repository.ApplyJpaRepository;
 import backend.univfit.domain.coverletter.api.dto.*;
 import backend.univfit.domain.coverletter.entity.CoverLetterEntity;
@@ -17,10 +18,7 @@ import backend.univfit.global.error.exception.CoverLetterException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 import static backend.univfit.global.error.status.ErrorStatus.COVER_LETTER_MEMBER_NOT_MATCH;
 
@@ -120,6 +118,22 @@ public class CoverLetterService {
         }
 
         return GeneralResponse.of();
+
+    }
+
+    public CoverLetterApplyList getApplyList(MemberInfoObject mio) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+        List<ApplyEntity> applyEntities = applyJpaRepository.findAllByMember(member);
+
+        ArrayList<CoverLetterApplyObj> coverLetterObjArrayList = new ArrayList<>();
+        for(ApplyEntity ae : applyEntities){
+            if(ae.getAnnouncementEntity().getIsCoverLetterNeed() && ae.getApplyStatus() == ApplyStatus.APPLY){
+                CoverLetterApplyObj cla = CoverLetterApplyObj.of(ae.getId(), ae.getAnnouncementEntity().getScholarShipName());
+                coverLetterObjArrayList.add(cla);
+            }
+        }
+
+        return CoverLetterApplyList.of(coverLetterObjArrayList);
 
     }
 }
