@@ -4,16 +4,15 @@ import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "cover_letter_table")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class CoverLetterEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +27,17 @@ public class CoverLetterEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "apply_id")
     private ApplyEntity applyEntity;
+
+    public static CoverLetterEntity of(
+        Member member,
+        String title,
+        ApplyEntity applyEntity
+    ){
+        return CoverLetterEntity.builder()
+                .member(member)
+                .title(title)
+                .applyEntity(applyEntity)
+                .build();
+    }
 
 }
