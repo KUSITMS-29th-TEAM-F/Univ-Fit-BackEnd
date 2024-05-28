@@ -136,4 +136,26 @@ public class CoverLetterService {
         return CoverLetterApplyList.of(coverLetterObjArrayList);
 
     }
+
+    public CoverLetterDetailResponse getCoverLetterDetail(Long coverLetterId, MemberInfoObject mio) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+        CoverLetterEntity coverLetterEntity = coverLetterJpaRepository.findById(coverLetterId).get();
+
+        if(member != coverLetterEntity.getMember()){
+            throw new CoverLetterException(COVER_LETTER_MEMBER_NOT_MATCH);
+        }
+
+        ArrayList<CoverLetterQuestionEntity> coverLetterQuestionEntities = coverLetterQuestionJpaRepository.findAllByCoverLetterEntity(coverLetterEntity);
+
+        ArrayList<CoverLetterObj> coverLetterObjs = new ArrayList<>();
+
+        for(CoverLetterQuestionEntity ce : coverLetterQuestionEntities){
+            String question = ce.getQuestion();
+            String content = ce.getContent();
+            CoverLetterObj coverLetterObj = CoverLetterObj.of(question, content);
+            coverLetterObjs.add(coverLetterObj);
+        }
+
+        return CoverLetterDetailResponse.of(coverLetterObjs);
+    }
 }

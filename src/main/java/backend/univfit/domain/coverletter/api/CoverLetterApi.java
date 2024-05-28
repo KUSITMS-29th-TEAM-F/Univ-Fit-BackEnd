@@ -41,7 +41,12 @@ public class CoverLetterApi {
         return ApiResponse.onSuccess(coverLetterService.getApplyList(mio));
     }
 
-
+    //자소서 상세 조회
+    @GetMapping("/{coverLetterId}")
+    public ApiResponse<CoverLetterDetailResponse> getCoverLetterDetail(@PathVariable(name = "coverLetterId") Long coverLetterId,
+                                                                       @MemberInfo MemberInfoObject mio){
+        return ApiResponse.onSuccess(coverLetterService.getCoverLetterDetail(coverLetterId, mio));
+    }
 
 
 

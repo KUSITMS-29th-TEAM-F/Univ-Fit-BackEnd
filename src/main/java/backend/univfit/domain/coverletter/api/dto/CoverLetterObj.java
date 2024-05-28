@@ -12,4 +12,14 @@ import lombok.NoArgsConstructor;
 public class CoverLetterObj {
     private String question;
     private String content;
+
+    public static CoverLetterObj of(
+            String question,
+            String content
+    ){
+        return CoverLetterObj.builder()
+                .question(question)
+                .content(content)
+                .build();
+    }
 }
