@@ -17,7 +17,9 @@ import backend.univfit.global.dto.response.GeneralResponse;
 import backend.univfit.global.error.exception.CoverLetterException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static backend.univfit.global.error.status.ErrorStatus.COVER_LETTER_MEMBER_NOT_MATCH;
@@ -157,5 +159,46 @@ public class CoverLetterService {
         }
 
         return CoverLetterDetailResponse.of(coverLetterObjs);
+    }
+
+    public MyCoverLetterList getMyCoverLetterList(MemberInfoObject mio) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+        List<CoverLetterEntity> coverLetterEntityList = coverLetterJpaRepository.findAllByMember(member);
+
+        ArrayList<MyCoverLetterEntry> myCoverLetterList = new ArrayList<>();
+        for(CoverLetterEntity ce : coverLetterEntityList){
+            Long coverLetterId = ce.getId();
+            String title = ce.getTitle();
+            String scholarshipFoundation = ce.getApplyEntity().getAnnouncementEntity().getScholarShipFoundation();
+            String scholarshipName = ce.getApplyEntity().getAnnouncementEntity().getScholarShipName();
+            LocalDate updatedAt = LocalDate.from(ce.getUpdatedAt());
+
+            MyCoverLetterEntry myCoverLetterEntry = MyCoverLetterEntry.of(coverLetterId,title
+            ,scholarshipFoundation, scholarshipName, updatedAt);
+
+            myCoverLetterList.add(myCoverLetterEntry);
+        }
+
+        return MyCoverLetterList.of(myCoverLetterList);
+    }
+
+    @Transactional
+    public GeneralResponse deleteCoverLetterList(MemberInfoObject mio, Long coverLetterId) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+
+        CoverLetterEntity coverLetterEntity = coverLetterJpaRepository.findById(coverLetterId).get();
+
+        //남의 자소서 삭제 시도시
+        if(member != coverLetterEntity.getMember()){
+            throw new CoverLetterException(COVER_LETTER_MEMBER_NOT_MATCH);
+        }
+
+        List<CoverLetterQuestionEntity> coverLetterQuestionEntities = coverLetterQuestionJpaRepository.findAllByCoverLetterEntity(coverLetterEntity);
+
+        coverLetterQuestionJpaRepository.deleteAll(coverLetterQuestionEntities);
+
+        coverLetterJpaRepository.delete(coverLetterEntity);
+
+        return GeneralResponse.of();
     }
 }

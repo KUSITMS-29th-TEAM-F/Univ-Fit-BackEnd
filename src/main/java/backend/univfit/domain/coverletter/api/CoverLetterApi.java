@@ -48,6 +48,17 @@ public class CoverLetterApi {
         return ApiResponse.onSuccess(coverLetterService.getCoverLetterDetail(coverLetterId, mio));
     }
 
+    //내가 쓴 자소서 리스트 조회
+    @GetMapping("")
+    public ApiResponse<MyCoverLetterList> getMyCoverLetterList(@MemberInfo MemberInfoObject mio){
+        return ApiResponse.onSuccess(coverLetterService.getMyCoverLetterList(mio));
+    }
 
+    //자소서 삭제
+    @DeleteMapping("/{coverLetterId}")
+    public ApiResponse<GeneralResponse> deleteCoverLetterList(@MemberInfo MemberInfoObject mio,
+                                                              @PathVariable(name = "coverLetterId") Long coverLetterId){
+        return ApiResponse.onSuccess(coverLetterService.deleteCoverLetterList(mio, coverLetterId));
+    }
 
 }
