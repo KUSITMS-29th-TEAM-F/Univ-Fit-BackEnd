@@ -1,9 +1,6 @@
 package backend.univfit.domain.apply.application;
 
-import backend.univfit.domain.apply.api.dto.response.AnnouncementDetailResponse;
-import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
-import backend.univfit.domain.apply.api.dto.response.AnnouncementResponse;
-import backend.univfit.domain.apply.api.dto.response.ScholarShipFoundationResponse;
+import backend.univfit.domain.apply.api.dto.response.*;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.apply.entity.ConditionEntity;
@@ -40,6 +37,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final ScholarShipFoundationJpaRepository scholarShipFoundationJpaRepository;
     private final ApplyJpaRepository applyJpaRepository;
     private final LikeJpaRepository likeJpaRepository;
+    private final ConditionManager conditionManager;
 
     /**
      * 전체장학금 조회
@@ -78,6 +76,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     /**
      * 세부장학금 조회
+     *
      * @param announcementId
      * @return
      */
@@ -104,14 +103,18 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         Boolean isLikedByMember = byMember.stream().anyMatch(like -> like.getAnnouncementEntity().getId().equals(announcementId));
         Boolean isStoredByMember = true;
-        if(applyJpaRepository.findByMemberAndAnnouncementEntity(member, announcement)==null){
+        if (applyJpaRepository.findByMemberAndAnnouncementEntity(member, announcement) == null) {
             isStoredByMember = false;
         }
 
+        List<ConditionCheckResponse> conditionCheckResponses = conditionManager.checkCondition(ae, member);
+
+
         return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipImage(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
                 remainingDay, applyPossible, supportAmount, ae.getApplicationPeriod(),
-                ae.getHashTag(), applyCondition, ae.getDetailContents(), likesCount,
-                isLikedByMember, isStoredByMember, ae.getFoundationLink());
+                ae.getHashTag(),/* applyCondition,*/ ae.getDetailContents(), likesCount,
+                isLikedByMember, isStoredByMember, ae.getFoundationLink(),
+                conditionCheckResponses);
     }
 
     @Override

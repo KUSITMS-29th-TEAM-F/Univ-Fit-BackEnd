@@ -24,6 +24,7 @@ public enum ErrorStatus implements BaseErrorCode {
 
     //Announcement 관련 에러
     ANNOUNCEMENT_NOT_FOUND(HttpStatus.NOT_FOUND,"ANNOUNCEMENT_001","해당 지원공고를 찾을 수 없습니다."),
+    ANNOUNCEMENT_CONDITION_NOT_FOUND(HttpStatus.NOT_FOUND,"ANNOUNCEMENT_002","공고의 조건 테이블을 찾을 수 없습니다."),
 
     //RequiredDocument 관련 에러
     REQUIRED_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND,"ANNOUNCEMENT_001","해당 필요한 서류를 찾을 수 없습니다."),

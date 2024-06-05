@@ -12,28 +12,31 @@ public record AnnouncementDetailResponse(
         String supportAmount,
         String applicationPeriod,
         String hashTag,
-        List<String> applyCondition,
+        /*List<String> applyCondition,*/
 //        String applicationConditions,
         String detailContents,
         Integer likes,
         Boolean memberIsLiked,
         Boolean memberIsStored,
-        String applyLink
+        String applyLink,
+        List<ConditionCheckResponse> conditionCheckResponseList
 ) {
     public static AnnouncementDetailResponse of(Long scholarshipId, String scholarShipImage, String scholarShipName, String scholarShipFoundation, Long remainingDay,
                                                 String applyPossible,
                                                 String supportAmount,
-                                                String applicationPeriod, String hashTag, List<String> applyCondition,
+                                                String applicationPeriod, String hashTag, /*List<String> applyCondition,*/
                                                 String detailContents,
                                                 Integer likes,
                                                 Boolean memberIsLiked,
                                                 Boolean memberIsStored,
-                                                String applyLink) {
+                                                String applyLink,
+                                                List<ConditionCheckResponse> conditionCheckResponseList) {
 
         return new AnnouncementDetailResponse(scholarshipId, scholarShipImage,
                 scholarShipName, scholarShipFoundation, remainingDay, applyPossible,
-                supportAmount, applicationPeriod, hashTag, applyCondition,
-                detailContents, likes, memberIsLiked, memberIsStored, applyLink
+                supportAmount, applicationPeriod, hashTag, /*applyCondition,*/
+                detailContents, likes, memberIsLiked, memberIsStored, applyLink,
+                conditionCheckResponseList
         );
 
     }
