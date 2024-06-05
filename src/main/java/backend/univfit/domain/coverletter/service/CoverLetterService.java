@@ -158,7 +158,8 @@ public class CoverLetterService {
             coverLetterObjs.add(coverLetterObj);
         }
 
-        return CoverLetterDetailResponse.of(coverLetterObjs);
+        return CoverLetterDetailResponse.of(coverLetterEntity.getTitle(), coverLetterEntity.getApplyEntity().getAnnouncementEntity().getScholarShipFoundation(),
+                coverLetterEntity.getApplyEntity().getAnnouncementEntity().getScholarShipName(), coverLetterEntity.getApplyEntity().getId(), coverLetterObjs);
     }
 
     public MyCoverLetterList getMyCoverLetterList(MemberInfoObject mio) {
