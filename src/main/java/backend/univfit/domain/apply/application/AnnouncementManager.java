@@ -92,7 +92,7 @@ public class AnnouncementManager {
             }
             return "지원대상";
         }
-        return "지원불가";
+        return "판단불가";
     }
 
     private boolean compareBasicInfo(ConditionEntity condition, MemberPrivateInfo memberInfo) {
