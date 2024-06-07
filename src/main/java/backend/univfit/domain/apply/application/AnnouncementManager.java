@@ -52,6 +52,7 @@ public class AnnouncementManager {
     }
 
     private String compareConditions(ConditionEntity condition, MemberPrivateInfo memberInfo) {
+        System.out.println("condition = " + condition.getSemester());
         boolean basicInfoMatch = compareBasicInfo(condition, memberInfo);
         System.out.println("basicInfoMatch = " + basicInfoMatch);
 
@@ -61,21 +62,40 @@ public class AnnouncementManager {
         boolean incomeMatch = compareIncome(condition, memberInfo);
         System.out.println("incomeMatch = " + incomeMatch);
 
-        // 조건 중 하나라도 일치하지 않는 경우, 지원불가로 처리
-        if (!basicInfoMatch || !gradesMatch || !incomeMatch) {
-            return "지원불가";
-        }
-
-        // 모두 일치하는 경우
-        if (basicInfoMatch && gradesMatch && incomeMatch) {
-            // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
-            if (condition.getExceptionValue() != null) {
-                return "판단불가";
-            }
-            return "지원대상";
-        }
-
-        // condition 필드는 있는데 memberInfo에 해당 필드가 null인 경우는 판단불가
+//        // 조건 중 하나라도 일치하지 않는 경우, 지원불가로 처리
+//        if (!basicInfoMatch || !gradesMatch || !incomeMatch) {
+//            return "지원불가";
+//        }
+//
+//        // 모두 일치하는 경우
+//        if (basicInfoMatch && gradesMatch && incomeMatch) {
+//            // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
+//            if (condition.getExceptionValue() != null) {
+//                return "판단불가";
+//            }
+//            return "지원대상";
+//        }
+//
+//        // condition 필드는 있는데 memberInfo에 해당 필드가 null인 경우는 판단불가
+//        if ((condition.getDeptType() != null && memberInfo.getDeptType() == null) ||
+//                (condition.getDeptName() != null && memberInfo.getDeptName() == null) ||
+//                (condition.getUnderPrivilegedInfo() != null && memberInfo.getUnderPrivilegedInfo() == null) ||
+//                (condition.getSemester() != null && memberInfo.getSemester() == null) ||
+//                (condition.getSchoolType() != null && memberInfo.getSchoolType() == null) ||
+//                (condition.getSchoolName() != null && memberInfo.getSchoolName() == null) ||
+//                (condition.getIsPresent() != null && memberInfo.getIsPresent() == null) ||
+//                (condition.getResidence() != null && memberInfo.getResidence() == null) ||
+//                (condition.getResidenceType() != null && memberInfo.getResidenceType() == null) ||
+//                (condition.getGender() != null && memberInfo.getGender() == null) ||
+//                (condition.getAge() != null && memberInfo.getBirthYear() == null) ||
+//                (condition.getMonthlyIncome() != null && memberInfo.getMonthlyIncome() == null) ||
+//                (condition.getIncomeQuality() != null && memberInfo.getIncomeQuality() == null) ||
+//                (condition.getSupportSection() != null && memberInfo.getSupportSection() == null)) {
+//            return "판단불가";
+//        }
+//
+//        return "판단불가";
+        // condition 필드가 null이 아닌데 memberInfo 필드가 null인 경우는 판단불가
         if ((condition.getDeptType() != null && memberInfo.getDeptType() == null) ||
                 (condition.getDeptName() != null && memberInfo.getDeptName() == null) ||
                 (condition.getUnderPrivilegedInfo() != null && memberInfo.getUnderPrivilegedInfo() == null) ||
@@ -91,6 +111,20 @@ public class AnnouncementManager {
                 (condition.getIncomeQuality() != null && memberInfo.getIncomeQuality() == null) ||
                 (condition.getSupportSection() != null && memberInfo.getSupportSection() == null)) {
             return "판단불가";
+        }
+
+        // 조건 중 하나라도 일치하지 않는 경우, 지원불가로 처리
+        if (!basicInfoMatch || !gradesMatch || !incomeMatch) {
+            return "지원불가";
+        }
+
+        // 모두 일치하는 경우
+        if (basicInfoMatch && gradesMatch && incomeMatch) {
+            // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
+            if (condition.getExceptionValue() != null) {
+                return "판단불가";
+            }
+            return "지원대상";
         }
 
         return "판단불가";

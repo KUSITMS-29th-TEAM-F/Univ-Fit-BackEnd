@@ -159,20 +159,34 @@ public class ConditionManager {
         }
 
         //사회적 배려 계층 여부
+//        if (announcementConditionEntity.getUnderprivilegedInfo() != null) {
+//            List<String> conditionKeywords = Arrays.asList(announcementConditionEntity.getUnderprivilegedInfo().split(","));
+//            for (String keyword : conditionKeywords) {
+//                if (memberInfo.getUnderPrivilegedInfo() == null) {
+//                    responses.add(new ConditionCheckResponse(keyword, "회색불"));
+//                } else if (memberInfo != null && memberInfo.getUnderPrivilegedInfo() != null && memberInfo.getUnderPrivilegedInfo().contains(keyword)) {
+//                    responses.add(new ConditionCheckResponse(keyword, "초록불"));
+//                } else if (memberInfo != null && !(memberInfo.getUnderPrivilegedInfo().contains(keyword))) {
+//                    responses.add(new ConditionCheckResponse(keyword, "빨간불"));
+//                } else {
+//                    responses.add(new ConditionCheckResponse(keyword, "회색불"));
+//                }
+//            }
+//
+//        }
         if (announcementConditionEntity.getUnderprivilegedInfo() != null) {
             List<String> conditionKeywords = Arrays.asList(announcementConditionEntity.getUnderprivilegedInfo().split(","));
             for (String keyword : conditionKeywords) {
-                if (memberInfo != null && memberInfo.getUnderPrivilegedInfo().toLowerCase().contains(keyword.trim().toLowerCase())) {
-                    responses.add(new ConditionCheckResponse(keyword, "초록불"));
-                } else if (memberInfo != null && !(memberInfo.getUnderPrivilegedInfo().toLowerCase().contains(keyword.trim().toLowerCase()))) {
-                    responses.add(new ConditionCheckResponse(keyword, "빨간불"));
-                } else {
+                if (memberInfo.getUnderPrivilegedInfo() == null) {
                     responses.add(new ConditionCheckResponse(keyword, "회색불"));
+                } else if (memberInfo.getUnderPrivilegedInfo().contains(keyword)) {
+                    responses.add(new ConditionCheckResponse(keyword, "초록불"));
+                } else {
+                    responses.add(new ConditionCheckResponse(keyword, "빨간불"));
                 }
             }
-
         }
-            //예외 조건 평가
+
 
         if (conditionEntity.getExceptionValue() != null) {
             String[] splitExceptionValue = conditionEntity.getExceptionValue().split(",");
