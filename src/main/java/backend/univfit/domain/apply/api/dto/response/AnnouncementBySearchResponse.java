@@ -11,8 +11,9 @@ public record AnnouncementBySearchResponse(
 ) {
     public static AnnouncementBySearchResponse of(Long announcementId, String scholarShipImage, String scholarShipName, String scholarshipFoundation, String applicationPeriod,
                                                   Long remainingDays, String applyPossible) {
-        return new AnnouncementBySearchResponse(announcementId, scholarShipImage, scholarShipName, scholarshipFoundation, applicationPeriod, remainingDays, remainingDays
+        return new AnnouncementBySearchResponse(announcementId, scholarShipImage, scholarShipName, scholarshipFoundation, applicationPeriod, remainingDays, applyPossible
         );
     }
+
 }
 
