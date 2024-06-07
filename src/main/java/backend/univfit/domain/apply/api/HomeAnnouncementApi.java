@@ -6,6 +6,7 @@ import backend.univfit.domain.apply.api.dto.response.PopularAnnouncementListResp
 import backend.univfit.domain.apply.application.HomeAnnouncementService;
 import backend.univfit.global.ApiResponse;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
+import backend.univfit.global.argumentResolver.customAnnotation.MemberInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class HomeAnnouncementApi {
      * 인기 장학금 조회
      * @return
      */
-    @GetMapping("/announcements")
+    @GetMapping("/popular-announcements")
     public ApiResponse<PopularAnnouncementListResponse> getPopularAnnouncements() {
         return ApiResponse.onSuccess(homeAnnouncementService.getPopularAnnouncements());
     }
@@ -35,7 +36,7 @@ public class HomeAnnouncementApi {
      */
     @GetMapping("/announcements/search")
     public ApiResponse<AnnouncementListBySearchResponse> getAnnouncementsBySearch(@RequestParam(value = "q") String q,
-                                                                                  MemberInfoObject memberInfoObject) {
+                                                                                  @MemberInfo MemberInfoObject memberInfoObject) {
         return ApiResponse.onSuccess(homeAnnouncementService.getAnnouncementsBySearch(q, memberInfoObject));
     }
 }

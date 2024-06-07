@@ -24,8 +24,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(accessTokenInterceptor)
                 .order(1)
-                .addPathPatterns("/onboards/**", "/announcements/calandar/**", "/members/**", "/apply-list/**","/announcements/**")
-                .excludePathPatterns("/announcements/{announcementId}/required-documents/{requiredDocumentId}", "/home/announcements");
+                .addPathPatterns("/onboards/**", "/announcements/calandar/**", "/members/**", "/apply-list/**", "/announcements/**",
+                        "/home/announcements/search")
+                .excludePathPatterns("/announcements/{announcementId}/required-documents/{requiredDocumentId}", "/home/popular-announcements");
+
     }
 
     @Override
