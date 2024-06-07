@@ -107,13 +107,13 @@ public class ConditionManager {
         if (announcementConditionEntity.getStudentGrade() != null) {
             Integer semester = memberInfo.getSemester();
             String studentGrade = null;
-            if (semester == 1 || semester == 2) {
+            if (semester == 1) {
                 studentGrade = "1";
-            } else if (semester == 3 || semester == 4) {
+            } else if (semester == 2 || semester == 3) {
                 studentGrade = "2";
-            } else if (semester == 5 || semester == 6) {
+            } else if (semester == 4 || semester == 5) {
                 studentGrade = "3";
-            } else if (semester == 7 || semester == 8) {
+            } else if (semester == 6 || semester == 7 || semester == 8) {
                 studentGrade = "4";
             } else {
                 return null;

@@ -61,12 +61,12 @@ public class AnnouncementManager {
         boolean incomeMatch = compareIncome(condition, memberInfo);
         System.out.println("incomeMatch = " + incomeMatch);
 
-        // 조건 중 하나라도 일치하지 않는 경우, exceptionValue를 체크하기 전에 먼저 지원불가로 처리
-        if (basicInfoMatch == false || !gradesMatch == false || !incomeMatch == false) {
+        // 조건 중 하나라도 일치하지 않는 경우, 지원불가로 처리
+        if (!basicInfoMatch || !gradesMatch || !incomeMatch) {
             return "지원불가";
         }
 
-        //모두 일치하는 경우
+        // 모두 일치하는 경우
         if (basicInfoMatch && gradesMatch && incomeMatch) {
             // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
             if (condition.getExceptionValue() != null) {
@@ -113,6 +113,8 @@ public class AnnouncementManager {
         System.out.println("underPrevilegedMatch = " + underPrevilegedMatch); //T
 
         boolean semesterMatch = true;
+        System.out.println("condition = " + condition.getSemester());
+        System.out.println("memberInfo.getSemester() = " + memberInfo.getSemester());
         if (condition.getSemester() != null && !condition.getSemester().isEmpty()) {
             List<String> semester = Arrays.asList(condition.getSemester().split("\\s*,\\s*"));
             semesterMatch = semester.contains(String.valueOf(memberInfo.getSemester()));
