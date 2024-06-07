@@ -5,6 +5,7 @@ import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
 import backend.univfit.domain.apply.api.dto.response.PopularAnnouncementListResponse;
 import backend.univfit.domain.apply.application.HomeAnnouncementService;
 import backend.univfit.global.ApiResponse;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +29,13 @@ public class HomeAnnouncementApi {
 
     /**
      * 검색 후 검색 키워드에 맞는 공고 조회
+     *
      * @param q
      * @return
      */
     @GetMapping("/announcements/search")
-    public ApiResponse<AnnouncementListBySearchResponse> getAnnouncementsBySearch(@RequestParam(value = "q") String q) {
-        return ApiResponse.onSuccess(homeAnnouncementService.getAnnouncementsBySearch(q));
+    public ApiResponse<AnnouncementListBySearchResponse> getAnnouncementsBySearch(@RequestParam(value = "q") String q,
+                                                                                  MemberInfoObject memberInfoObject) {
+        return ApiResponse.onSuccess(homeAnnouncementService.getAnnouncementsBySearch(q, memberInfoObject));
     }
 }
