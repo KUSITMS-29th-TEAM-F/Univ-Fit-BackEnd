@@ -62,8 +62,17 @@ public class AnnouncementManager {
         System.out.println("incomeMatch = " + incomeMatch);
 
         // 조건 중 하나라도 일치하지 않는 경우, exceptionValue를 체크하기 전에 먼저 지원불가로 처리
-        if (!basicInfoMatch || !gradesMatch || !incomeMatch) {
+        if (basicInfoMatch == false || !gradesMatch == false || !incomeMatch == false) {
             return "지원불가";
+        }
+
+        //모두 일치하는 경우
+        if (basicInfoMatch && gradesMatch && incomeMatch) {
+            // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
+            if (condition.getExceptionValue() != null) {
+                return "판단불가";
+            }
+            return "지원대상";
         }
 
         // condition 필드는 있는데 memberInfo에 해당 필드가 null인 경우는 판단불가
@@ -84,14 +93,6 @@ public class AnnouncementManager {
             return "판단불가";
         }
 
-        //모두 일치하는 경우
-        if (basicInfoMatch && gradesMatch && incomeMatch) {
-            // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
-            if (condition.getExceptionValue() != null) {
-                return "판단불가";
-            }
-            return "지원대상";
-        }
         return "판단불가";
     }
 
