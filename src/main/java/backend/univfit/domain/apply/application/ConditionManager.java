@@ -72,7 +72,7 @@ public class ConditionManager {
         // 학교지역 평가
         if (announcementConditionEntity.getSchoolRegion() != null) {
             String result = (memberInfo.getSchoolLocation() != null && memberInfo.getSchoolLocation().contains(announcementConditionEntity.getSchoolRegion()) ? "초록불" : "빨간불");
-            responses.add(new ConditionCheckResponse(announcementConditionEntity.getSchoolRegion() + "소제 대학", memberInfo.getSchoolLocation() != null ? result : "회색불"));
+            responses.add(new ConditionCheckResponse(announcementConditionEntity.getSchoolRegion() + " 소제 대학", memberInfo.getSchoolLocation() != null ? result : "회색불"));
 
 //            compareExcept.add(announcementConditionEntity.getIncomeQuality() + "분위 이내");
         }

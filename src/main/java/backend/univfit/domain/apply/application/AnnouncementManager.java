@@ -61,15 +61,6 @@ public class AnnouncementManager {
         boolean incomeMatch = compareIncome(condition, memberInfo);
         System.out.println("incomeMatch = " + incomeMatch);
 
-        //모두 일치하는 경우
-        if (basicInfoMatch && gradesMatch && incomeMatch) {
-            // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
-            if (condition.getExceptionValue() != null) {
-                return "판단불가";
-            }
-            return "지원대상";
-        }
-
         // 조건 중 하나라도 일치하지 않는 경우, exceptionValue를 체크하기 전에 먼저 지원불가로 처리
         if (!basicInfoMatch || !gradesMatch || !incomeMatch) {
             return "지원불가";
@@ -92,7 +83,16 @@ public class AnnouncementManager {
                 (condition.getSupportSection() != null && memberInfo.getSupportSection() == null)) {
             return "판단불가";
         }
-        return "지원대상";
+
+        //모두 일치하는 경우
+        if (basicInfoMatch && gradesMatch && incomeMatch) {
+            // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
+            if (condition.getExceptionValue() != null) {
+                return "판단불가";
+            }
+            return "지원대상";
+        }
+        return "지원불가";
     }
 
     private boolean compareBasicInfo(ConditionEntity condition, MemberPrivateInfo memberInfo) {
