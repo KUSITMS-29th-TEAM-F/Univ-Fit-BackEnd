@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(accessTokenInterceptor)
                 .order(1)
                 .addPathPatterns("/onboards/**", "/announcements/calandar/**", "/members/**", "/apply-list/**","/announcements/**")
-                .excludePathPatterns("/announcements/{announcementId}/required-documents/{requiredDocumentId}", "/home/**");
+                .excludePathPatterns("/announcements/{announcementId}/required-documents/{requiredDocumentId}", "/home/announcements");
     }
 
     @Override
